@@ -1,4 +1,4 @@
-package main
+package util
 
 import (
 	"crypto/aes"
@@ -26,6 +26,7 @@ func DecryptLargeFile(fileInput, fileOutput string, key []byte) error {
 	iv := make([]byte, block.BlockSize()) // inicialization vector (vertor de inciaalização) e o tamanho e determinado pela key
 	// tamanho da mensagem, vai acontecer um calculo e retirar o iv , por a mensagem original não tem, pois ele foi insetido no final do arquivo
 	msgLen := fi.Size() - int64(len(iv)) // mensagem - o ponto
+	_, err = infile.ReadAt(iv, msgLen)   //ler apartir de um limitador
 	if err != nil {
 		log.Fatal("erro lendo o iv: ", err)
 	}
